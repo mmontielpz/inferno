@@ -70,7 +70,7 @@ class Performance:
     def measure_inference_time(self, model, input_data, n=100):
         times = []
         with torch.no_grad():
-            for _ in tqdm(range(n), desc="[⏱️ ] Measuring Inference Time"):
+            for _ in tqdm(range(n), desc="[⏱️] Measuring Inference Time"):
                 cuda.synchronize()
                 start = cuda.Event(enable_timing=True)
                 end = cuda.Event(enable_timing=True)
