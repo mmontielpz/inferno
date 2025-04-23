@@ -50,7 +50,7 @@ class ModuleProfiler:
 
     def _element_mem(self, tensor):
         element_size = tensor.element_size()
-        fact_numel = tensor.storage().size()
+        fact_numel = tensor.untyped_storage().size()
         raw_size = fact_numel * element_size
         return math.ceil(raw_size / PYTORCH_MIN_ALLOCATE) * PYTORCH_MIN_ALLOCATE
 
