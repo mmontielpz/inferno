@@ -11,11 +11,11 @@ import math
 SIZE_MAP = {
     torch.float32: 4,
     torch.float64: 8,
-    torch.float16: 2,
     torch.int8: 1,
-    torch.int16: 2,
+    torch.float16: 2,
     torch.int32: 4,
     torch.int64: 8,
+    torch.int16: 2,
     torch.uint8: 1
 }
 
@@ -73,7 +73,14 @@ class ModuleProfiler:
 
         elif name in {"avg_pool", "max_pool"}:
             C, H, W = self.input.shape[1:]
-            Kh, Kw = self.module.kernel_size
+
+            ks = self.module.kernel_size
+
+            if isinstance(ks, int):
+                Kh = Kw = ks
+            else:
+                Kh, Kw = ks
+
             return C * H * W * Kh * Kw
 
         elif name == "bn":
